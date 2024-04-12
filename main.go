@@ -18,7 +18,12 @@ func main() {
 
 	dbClient := db.NewClient(logger.Named("db"))
 
+	if err := dbClient.Start(); err != nil {
+		panic(err)
+	}
+
 	host := os.Getenv(sdk.EnvHost)
+
 	server := core.NewServer(host, dbClient, logger.Named("server"))
 	server.Start()
 }
