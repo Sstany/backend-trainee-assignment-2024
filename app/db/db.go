@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"os"
 	"time"
 
 	"banney/sdk"
@@ -18,8 +17,8 @@ type Client struct {
 	logger *zap.Logger
 }
 
-func NewClient(log *zap.Logger) *Client {
-	db, err := sql.Open("postgres", os.Getenv(sdk.EnvPostgres))
+func NewClient(uri string, log *zap.Logger) *Client {
+	db, err := sql.Open("postgres", uri)
 	if err != nil {
 		panic(err)
 	}
@@ -65,4 +64,15 @@ func (r *Client) Start() error {
 	}
 
 	return nil
+}
+
+func (r *Client) Cleanup() {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+
+	defer cancel()
+
+	_, err := r.cli.ExecContext(ctx, queryTruncateAll)
+	if err != nil && !sdk.IsDublicateTableErr(err) {
+		r.logger.Error("creating abnner_tag table", zap.Error(err))
+	}
 }

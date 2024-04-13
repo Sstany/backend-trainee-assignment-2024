@@ -4,5 +4,5 @@ import "errors"
 
 var (
 	errConversionFailed = errors.New("type conversion failed")
-	errBannerExists     = errors.New("banner exists")
+	errBannerExists     = errors.New("banner already exists")
 )

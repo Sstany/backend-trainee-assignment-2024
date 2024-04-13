@@ -25,6 +25,10 @@ const (
 )
 
 const (
+	queryTruncateAll = `TRUNCATE banner, feature, tag, banner_tag`
+)
+
+const (
 	queryGetBannerByTagAndFeature = `SELECT
     banner.banner_id,
     banner_tag.tag_id,

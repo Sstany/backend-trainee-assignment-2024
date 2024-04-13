@@ -20,8 +20,10 @@ func (r *Client) CreateBanner(ctx context.Context, obj any) (int, error) {
 	}
 
 	defer tx.Rollback()
-	var foundBanner models.Banner
-	var tagID int
+	var (
+		foundBanner models.Banner
+		foundtagID  int
+	)
 
 	err = tx.QueryRowContext(
 		ctx,
@@ -29,7 +31,7 @@ func (r *Client) CreateBanner(ctx context.Context, obj any) (int, error) {
 		banner.FeatureID,
 		banner.TagIDs[0],
 	).Scan(&foundBanner.ID,
-		&tagID,
+		&foundtagID,
 		&foundBanner.FeatureID,
 		&foundBanner.Content,
 		&foundBanner.IsActive,

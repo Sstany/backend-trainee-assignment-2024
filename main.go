@@ -10,13 +10,13 @@ import (
 )
 
 func main() {
-
 	logger, err := zap.NewProduction()
 	if err != nil {
 		panic(err)
 	}
+	dbURL := os.Getenv(sdk.EnvPostgres)
 
-	dbClient := db.NewClient(logger.Named("db"))
+	dbClient := db.NewClient(dbURL, logger.Named("db"))
 
 	if err := dbClient.Start(); err != nil {
 		panic(err)
@@ -25,5 +25,8 @@ func main() {
 	host := os.Getenv(sdk.EnvHost)
 
 	server := core.NewServer(host, dbClient, logger.Named("server"))
+
 	server.Start()
+
+	server.Wait()
 }

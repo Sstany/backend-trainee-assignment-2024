@@ -22,7 +22,7 @@ func NewBannerRouter(pr *router.Router) *BannerRouter {
 func AttachToGroup(pr *router.Router, parentGroup *gin.RouterGroup) {
 	bannerRouter := NewBannerRouter(pr)
 
-	parentGroup.POST("/", bannerRouter.create)
+	parentGroup.POST("", bannerRouter.create)
 	// parentGroup.GET("/")
 	// parentGroup.PATCH("/:id")
 	// parentGroup.DELETE("/:id")
