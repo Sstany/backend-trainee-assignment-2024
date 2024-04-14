@@ -1,6 +1,7 @@
 package integrationtests
 
 import (
+	"banney/sdk"
 	"banney/sdk/models"
 	"encoding/json"
 	"net/http"
@@ -12,10 +13,16 @@ import (
 
 func TestBannerCreate(t *testing.T) {
 	bodyJSON := `{"tag_ids":[1,2],"feature_id":1,"content":{"foo":"bar"}, "is_active":true}`
-
+	adminToken = NewAdminToken()
 	body := strings.NewReader(bodyJSON)
 
-	resp, err := http.Post("http://localhost:8090/banner", "application/json", body)
+	req, err := http.NewRequest(http.MethodPost, "http://localhost:8090/banner", body)
+	assert.NilError(t, err)
+
+	req.Header.Add(sdk.HeaderToken, adminToken)
+	req.Header.Add("Content-Type", "application/json")
+
+	resp, err := http.DefaultClient.Do(req)
 	assert.NilError(t, err)
 
 	defer resp.Body.Close()
@@ -33,7 +40,13 @@ func TestBannerCreateFailure(t *testing.T) {
 
 	body := strings.NewReader(bodyJSON)
 
-	resp, err := http.Post("http://localhost:8090/banner", "application/json", body)
+	req, err := http.NewRequest(http.MethodPost, "http://localhost:8090/banner", body)
+	assert.NilError(t, err)
+
+	req.Header.Add(sdk.HeaderToken, adminToken)
+	req.Header.Add("Content-Type", "application/json")
+
+	resp, err := http.DefaultClient.Do(req)
 	assert.NilError(t, err)
 
 	defer resp.Body.Close()
@@ -53,7 +66,13 @@ func TestBannerCreateAlreadyExists(t *testing.T) {
 
 	body := strings.NewReader(bodyJSON)
 
-	resp, err := http.Post("http://localhost:8090/banner", "application/json", body)
+	req, err := http.NewRequest(http.MethodPost, "http://localhost:8090/banner", body)
+	assert.NilError(t, err)
+
+	req.Header.Add(sdk.HeaderToken, adminToken)
+	req.Header.Add("Content-Type", "application/json")
+
+	resp, err := http.DefaultClient.Do(req)
 	assert.NilError(t, err)
 
 	defer resp.Body.Close()
@@ -67,7 +86,13 @@ func TestBannerCreateAlreadyExists(t *testing.T) {
 
 	body = strings.NewReader(bodyJSON)
 
-	resp, err = http.Post("http://localhost:8090/banner", "application/json", body)
+	req, err = http.NewRequest(http.MethodPost, "http://localhost:8090/banner", body)
+	assert.NilError(t, err)
+
+	req.Header.Add(sdk.HeaderToken, adminToken)
+	req.Header.Add("Content-Type", "application/json")
+
+	resp, err = http.DefaultClient.Do(req)
 	assert.NilError(t, err)
 
 	defer resp.Body.Close()

@@ -2,6 +2,7 @@ package core
 
 import (
 	"banney/app/db"
+	"banney/app/handlers/auth"
 	"banney/app/handlers/banner"
 	"banney/app/router"
 	"context"
@@ -69,6 +70,7 @@ func (r *Server) newAPI() *gin.Engine {
 
 	pr := router.New(r.dbClient, r.logger.Named("router"))
 	banner.AttachToGroup(pr, engine.Group("banner"))
+	auth.AttachToGroup(pr, engine.Group("auth"))
 
 	return engine
 }

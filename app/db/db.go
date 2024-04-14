@@ -35,6 +35,13 @@ func (r *Client) Start() error {
 
 	var err error
 
+	_, err = r.cli.ExecContext(ctx, queryCreateUserTable)
+	if err != nil && !sdk.IsDublicateTableErr(err) {
+		r.logger.Error("creating user table", zap.Error(err))
+
+		return fmt.Errorf("creating user table: %w", err)
+	}
+
 	_, err = r.cli.ExecContext(ctx, queryCreateTagTable)
 	if err != nil && !sdk.IsDublicateTableErr(err) {
 		r.logger.Error("creating tag table", zap.Error(err))

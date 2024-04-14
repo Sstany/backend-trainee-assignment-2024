@@ -1,6 +1,13 @@
 package db
 
 const (
+	queryCreateUserTable = `CREATE TABLE users (
+		user_id serial PRIMARY KEY,
+		login TEXT NOT NULL,
+		hash TEXT NOT NULL,
+		is_admin bool NOT NULL,
+		UNIQUE(login))`
+
 	queryCreateBannerTable = `CREATE TABLE banner (
 		banner_id serial PRIMARY KEY,
 		feature_id int ,
@@ -20,6 +27,11 @@ const (
 	queryInsertTag       = `INSERT INTO tag (tag_id) VALUES ($1) ON CONFLICT DO NOTHING`
 	queryInsertBanner    = `INSERT INTO banner (feature_id,content,is_active) VALUES ($1,$2,$3) RETURNING banner_id`
 	queryInsertBannerTag = `INSERT INTO banner_tag(banner_id, tag_id) VALUES($1,$2)`
+	queryInsertUser      = `INSERT INTO users (login, hash, is_admin) VALUES($1,$2,$3) RETURNING user_id`
+)
+
+const (
+	queryGetUser = `SELECT * FROM users WHERE login = $1`
 )
 
 const (

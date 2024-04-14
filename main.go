@@ -26,6 +26,8 @@ func main() {
 
 	server := core.NewServer(host, dbClient, logger.Named("server"))
 
+	sdk.InitSecret()
+
 	server.Start()
 
 	server.Wait()

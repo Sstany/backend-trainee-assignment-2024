@@ -3,6 +3,7 @@ package integrationtests
 import (
 	"banney/app/core"
 	"banney/app/db"
+	"banney/sdk"
 	"context"
 	"database/sql"
 	"fmt"
@@ -16,6 +17,8 @@ import (
 	log "github.com/sirupsen/logrus"
 	"go.uber.org/zap"
 )
+
+var adminToken string
 
 var databaseUrl string
 
@@ -38,10 +41,14 @@ func TestMain(m *testing.M) {
 
 	server := core.NewServer(host, testDBClient, logger.Named("server"))
 
+	sdk.InitSecret()
+
 	server.Start()
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
+
+	adminToken = NewAdminToken()
 
 	code := m.Run()
 
