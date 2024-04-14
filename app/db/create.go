@@ -11,7 +11,7 @@ import (
 func (r *Client) CreateBanner(ctx context.Context, obj any) (int, error) {
 	banner, ok := obj.(*models.Banner)
 	if !ok {
-		return -1, errConversionFailed
+		return -1, ErrConversionFailed
 	}
 
 	tx, err := r.cli.BeginTx(ctx, nil)
@@ -42,7 +42,7 @@ func (r *Client) CreateBanner(ctx context.Context, obj any) (int, error) {
 		}
 	}
 	if foundBanner.ID != 0 {
-		return -1, errBannerExists
+		return -1, ErrBannerExists
 	}
 
 	_, err = tx.ExecContext(ctx, queryInsertFeature, banner.FeatureID)

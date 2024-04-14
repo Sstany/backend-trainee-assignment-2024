@@ -1,63 +1,48 @@
 package db
 
 import (
-	"banney/sdk/models"
 	"context"
-	"database/sql"
-	"errors"
 	"fmt"
+	"strconv"
 )
 
-func (r *Client) DeleteBanner(ctx context.Context, obj any) (int, error) {
-	banner, ok := obj.(*models.Banner)
+func (r *Client) DeleteBanner(ctx context.Context, obj any) error {
+	bannerIDString, ok := obj.(string)
 	if !ok {
-		return -1, errConversionFailed
+		return ErrConversionFailed
 	}
 
+	bannerID, err := strconv.Atoi(bannerIDString)
+	if err != nil {
+		return fmt.Errorf("error banner input: %w", err)
+	}
 	tx, err := r.cli.BeginTx(ctx, nil)
 	if err != nil {
-		return -1, fmt.Errorf("begin tx: %w", err)
+		return fmt.Errorf("begin tx: %w", err)
 	}
 
 	defer tx.Rollback()
-	var (
-		foundBanner models.Banner
-		foundtagID  int
-	)
+	var foundBannerID int
+	err = tx.QueryRowContext(ctx, querySelectBanner, bannerID).Scan(&foundBannerID)
+	if foundBannerID == 0 {
+		return ErrBannerNotExists
+	}
+	if err != nil {
+		return fmt.Errorf("get banner: %w", err)
 
-	err = tx.QueryRowContext(
-		ctx,
-		queryGetBannerByTagAndFeature,
-		banner.FeatureID,
-		banner.TagIDs[0],
-	).Scan(&foundBanner.ID,
-		&foundtagID,
-		&foundBanner.FeatureID,
-		&foundBanner.Content,
-		&foundBanner.IsActive,
-	)
+	}
+
+	_, err = tx.ExecContext(ctx, queryDeleteBanner, bannerID)
 	if err != nil {
-		if !errors.Is(err, sql.ErrNoRows) {
-			return -1, fmt.Errorf("get banner: %w", err)
-		}
+		return fmt.Errorf(" banner: %w", err)
 	}
-	if foundBanner.ID == 0 {
-		return -1, errBannerNotExists
-	}
-	TagID := banner.TagIDs[0]
-	rows, err := tx.QueryContext(ctx, queryDeleteBanner, banner.FeatureID, TagID)
-	if err != nil {
-		return -1, fmt.Errorf(" banner: %w", err)
-	}
-	var bannerID int
-	if rows.Next() {
-		if err = rows.Scan(&bannerID); err != nil {
-			return -1, fmt.Errorf("decode bannerID: %w", err)
-		}
-		rows.Close()
-	}
+
+	// _, err = tx.ExecContext(ctx, queryDeleteBannerTag, bannerID)
+	// if err != nil {
+	// 	return fmt.Errorf(" banner: %w", err)
+	// }
 
 	tx.Commit()
 
-	return bannerID, err
+	return nil
 }

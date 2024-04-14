@@ -12,7 +12,7 @@ const (
 	queryCreateFeatureTable = `CREATE TABLE feature (feature_id serial PRIMARY KEY)`
 
 	queryCreateBannerTagTable = `CREATE TABLE banner_tag (
-		banner_id int references banner (banner_id),
+		banner_id int references banner (banner_id) ON DELETE CASCADE,
 		tag_id int references tag (tag_id),
 		CONSTRAINT banner_tag_pkey PRIMARY KEY (banner_id, tag_id))`
 )
@@ -25,7 +25,12 @@ const (
 )
 
 const (
-	queryDeleteBanner = `DELETE FROM banner_tag USING banner WHERE banner_tag.banner_id = banner.banner_id AND banner.feature_id = ($1) AND banner_tag.tag_id = ($2)`
+	querySelectBanner = `SELECT banner_id FROM banner WHERE banner_id = ($1)`
+)
+
+const (
+	queryDeleteBanner = `DELETE FROM banner WHERE  banner_id = ($1)`
+	//queryDeleteBannerTag = `DELETE FROM banner_tag WHERE  banner_id = ($1)`
 )
 
 const (
