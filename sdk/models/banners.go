@@ -19,6 +19,10 @@ type BannerCreated struct {
 	ID int `json:"banner_id"`
 }
 
+type BannerDeleted struct {
+	ID int `json:"banner_id"`
+}
+
 type Content struct {
 	Content any `json:"content"`
 }

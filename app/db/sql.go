@@ -25,6 +25,10 @@ const (
 )
 
 const (
+	queryDeleteBanner = `DELETE FROM banner_tag USING banner WHERE banner_tag.banner_id = banner.banner_id AND banner.feature_id = ($1) AND banner_tag.tag_id = ($2)`
+)
+
+const (
 	queryTruncateAll = `TRUNCATE banner, feature, tag, banner_tag`
 )
 
