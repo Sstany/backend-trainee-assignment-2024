@@ -3,13 +3,11 @@ package db
 const (
 	queryCreateBannerTable = `CREATE TABLE banner (
 		banner_id serial PRIMARY KEY,
-		feature_id int references feature (feature_id),
+		feature_id int ,
 		content JSONB,
 		is_active bool NOT NULL)`
 
 	queryCreateTagTable = `CREATE TABLE tag (tag_id serial PRIMARY KEY)`
-
-	queryCreateFeatureTable = `CREATE TABLE feature (feature_id serial PRIMARY KEY)`
 
 	queryCreateBannerTagTable = `CREATE TABLE banner_tag (
 		banner_id int references banner (banner_id) ON DELETE CASCADE,
@@ -30,11 +28,15 @@ const (
 
 const (
 	queryDeleteBanner = `DELETE FROM banner WHERE  banner_id = ($1)`
-	//queryDeleteBannerTag = `DELETE FROM banner_tag WHERE  banner_id = ($1)`
+	queryDeleteTag    = `DELETE FROM banner_tag WHERE banner_id = $1`
+	queryUpdateTag    = `UPDATE banner_tag SET tag_id = $2 WHERE banner_id = $1`
 )
 
 const (
-	queryTruncateAll = `TRUNCATE banner, feature, tag, banner_tag`
+	queryUpdateBanner = `UPDATE banner SET feature_id = $2, content = $3, is_active = $4 WHERE banner_id = $1`
+)
+const (
+	queryTruncateAll = `TRUNCATE banner, tag, banner_tag`
 )
 
 const (

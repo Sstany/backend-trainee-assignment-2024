@@ -42,13 +42,6 @@ func (r *Client) Start() error {
 		return fmt.Errorf("creating tag table: %w", err)
 	}
 
-	_, err = r.cli.ExecContext(ctx, queryCreateFeatureTable)
-	if err != nil && !sdk.IsDublicateTableErr(err) {
-		r.logger.Error("creating feature table", zap.Error(err))
-
-		return fmt.Errorf("creating feature table: %w", err)
-	}
-
 	_, err = r.cli.ExecContext(ctx, queryCreateBannerTable)
 	if err != nil && !sdk.IsDublicateTableErr(err) {
 		r.logger.Error("creating banner table", zap.Error(err))

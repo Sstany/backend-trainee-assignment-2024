@@ -37,11 +37,6 @@ func (r *Client) DeleteBanner(ctx context.Context, obj any) error {
 		return fmt.Errorf(" banner: %w", err)
 	}
 
-	// _, err = tx.ExecContext(ctx, queryDeleteBannerTag, bannerID)
-	// if err != nil {
-	// 	return fmt.Errorf(" banner: %w", err)
-	// }
-
 	tx.Commit()
 
 	return nil

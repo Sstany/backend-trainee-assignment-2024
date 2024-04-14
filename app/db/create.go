@@ -45,10 +45,10 @@ func (r *Client) CreateBanner(ctx context.Context, obj any) (int, error) {
 		return -1, ErrBannerExists
 	}
 
-	_, err = tx.ExecContext(ctx, queryInsertFeature, banner.FeatureID)
-	if err != nil {
-		return -1, fmt.Errorf("insert feature: %w", err)
-	}
+	// _, err = tx.ExecContext(ctx, queryInsertFeature, banner.FeatureID)
+	// if err != nil {
+	// 	return -1, fmt.Errorf("insert feature: %w", err)
+	// }
 
 	rows, err := tx.QueryContext(ctx, queryInsertBanner, banner.FeatureID, banner.Content, banner.IsActive)
 	if err != nil {
