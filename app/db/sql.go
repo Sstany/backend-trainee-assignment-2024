@@ -65,4 +65,6 @@ INNER JOIN
   ON banner_tag.banner_id = banner.banner_id
 WHERE feature_id=$1
 AND tag_id =$2`
+
+	queryGetTagsByBannerID = `SELECT tag_id from banner_tag WHERE banner_id=$1`
 )

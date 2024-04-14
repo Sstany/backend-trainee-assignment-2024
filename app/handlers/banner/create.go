@@ -45,6 +45,8 @@ func (r *BannerRouter) create(ctx *gin.Context) {
 		return
 	}
 
+	go r.CacheBanner(&banner, claims.UserID)
+
 	ctx.JSON(http.StatusCreated, &models.BannerCreated{ID: bannerID})
 
 }

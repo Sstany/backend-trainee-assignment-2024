@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"sync"
 
+	userbanner "banney/app/handlers/user_banner"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -71,6 +73,7 @@ func (r *Server) newAPI() *gin.Engine {
 	pr := router.New(r.dbClient, r.logger.Named("router"))
 	banner.AttachToGroup(pr, engine.Group("banner"))
 	auth.AttachToGroup(pr, engine.Group("auth"))
+	userbanner.AttachToGroup(pr, engine.Group("user_banner"))
 
 	return engine
 }

@@ -1,6 +1,9 @@
 package sdk
 
-import "os"
+import (
+	"os"
+	"time"
+)
 
 const (
 	EnvPostgres = "POSTGRES"
@@ -10,6 +13,14 @@ const (
 
 const (
 	HeaderToken = "token"
+
+	QueryTagID           = "tag_id"
+	QueryFeatureID       = "feature_id"
+	QueryUseLastRevision = "use_last_revision"
+)
+
+var (
+	DefaulCacheLifetime = 5 * time.Minute
 )
 
 var (
