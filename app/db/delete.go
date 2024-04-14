@@ -27,6 +27,7 @@ func (r *Client) DeleteBanner(ctx context.Context, obj any) error {
 	if foundBannerID == 0 {
 		return ErrBannerNotExists
 	}
+
 	if err != nil {
 		return fmt.Errorf("get banner: %w", err)
 

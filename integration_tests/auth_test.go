@@ -1,10 +1,11 @@
 package integrationtests
 
 import (
-	"banney/sdk/models"
 	"encoding/json"
 	"net/http"
 	"strings"
+
+	"banney/sdk/models"
 )
 
 func NewAdminToken() string {

@@ -1,9 +1,10 @@
 package db
 
 import (
-	"banney/sdk/models"
 	"context"
 	"fmt"
+
+	"banney/sdk/models"
 )
 
 func (r *Client) CreateUser(ctx context.Context, obj any) (int, error) {

@@ -17,6 +17,12 @@ const (
 	QueryTagID           = "tag_id"
 	QueryFeatureID       = "feature_id"
 	QueryUseLastRevision = "use_last_revision"
+	QueryOffset          = "offset"
+	QueryLimit           = "limit"
+)
+const (
+	MaxLimit     = 1000
+	DefaultLimit = 100
 )
 
 var (

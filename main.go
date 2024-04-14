@@ -1,10 +1,11 @@
 package main
 
 import (
+	"os"
+
 	"banney/app/core"
 	"banney/app/db"
 	"banney/sdk"
-	"os"
 
 	"go.uber.org/zap"
 )
@@ -14,6 +15,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	dbURL := os.Getenv(sdk.EnvPostgres)
 
 	dbClient := db.NewClient(dbURL, logger.Named("db"))

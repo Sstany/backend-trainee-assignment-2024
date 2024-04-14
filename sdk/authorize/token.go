@@ -1,9 +1,10 @@
 package authorize
 
 import (
+	"errors"
+
 	"banney/sdk"
 	"banney/sdk/models"
-	"errors"
 
 	"github.com/golang-jwt/jwt"
 )

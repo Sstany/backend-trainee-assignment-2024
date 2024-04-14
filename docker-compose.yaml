@@ -9,13 +9,13 @@ services:
         - "5432:5432"
     volumes:
         - postgres:/var/lib/postgresql/data
-  # web:
-  #   depends_on:
-  #       - "postgres"
-  #   build: .
-  #   ports:
-  #       - "8090:8090"
-  #   environment:
-  #       - POSTGRES=postgresql://username:password@postgres:5432/avito?sslmode=disable
+  web:
+    depends_on:
+        - "postgres"
+    build: .
+    ports:
+        - "8090:8090"
+    environment:
+        - POSTGRES=postgresql://username:password@postgres:5432/avito?sslmode=disable
 volumes:
   postgres:

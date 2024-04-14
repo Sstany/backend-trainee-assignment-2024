@@ -11,6 +11,7 @@ func IsDublicateTableErr(err error) bool {
 	if pqErr, ok := err.(*pq.Error); ok && pqErr.Code.Name() == "duplicate_table" {
 		return true
 	}
+
 	return false
 }
 

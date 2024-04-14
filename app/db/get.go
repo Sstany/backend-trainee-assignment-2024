@@ -1,10 +1,11 @@
 package db
 
 import (
-	"banney/sdk/models"
 	"context"
 	"fmt"
 	"strconv"
+
+	"banney/sdk/models"
 )
 
 func (r *Client) GetBanner(
@@ -41,20 +42,33 @@ func (r *Client) GetBanner(
 		return nil, fmt.Errorf("get banner: %w", err)
 	}
 
-	rows, err := r.cli.QueryContext(ctx, queryGetTagsByBannerID, banner.ID)
+	banner.TagIDs, err = r.getTags(ctx, banner.ID)
+	if err != nil {
+		return nil, fmt.Errorf("list tags: %w", err)
+	}
+
+	return &banner, nil
+}
+
+func (r *Client) getTags(ctx context.Context, bannerID int) ([]int, error) {
+	rows, err := r.cli.QueryContext(ctx, queryGetTagsByBannerID, bannerID)
 	if err != nil {
 		return nil, fmt.Errorf("get tags: %w", err)
 	}
 
 	var tempTag int
 
+	var tags []int
+
+	defer rows.Close()
+
 	for rows.Next() {
 		if err = rows.Scan(&tempTag); err != nil {
 			return nil, fmt.Errorf("parse tag: %w", err)
 		}
 
-		banner.TagIDs = append(banner.TagIDs, tempTag)
+		tags = append(tags, tempTag)
 	}
 
-	return &banner, nil
+	return tags, nil
 }

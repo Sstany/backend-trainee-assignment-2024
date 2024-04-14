@@ -1,15 +1,16 @@
 package integrationtests
 
 import (
-	"banney/app/core"
-	"banney/app/db"
-	"banney/sdk"
 	"context"
 	"database/sql"
 	"fmt"
 	"os"
 	"testing"
 	"time"
+
+	"banney/app/core"
+	"banney/app/db"
+	"banney/sdk"
 
 	_ "github.com/lib/pq"
 	"github.com/ory/dockertest/v3"

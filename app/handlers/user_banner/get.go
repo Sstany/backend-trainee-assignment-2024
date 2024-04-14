@@ -1,12 +1,13 @@
 package userbanner
 
 import (
-	"banney/sdk"
-	"banney/sdk/authorize"
-	"banney/sdk/models"
 	"database/sql"
 	"errors"
 	"net/http"
+
+	"banney/sdk"
+	"banney/sdk/authorize"
+	"banney/sdk/models"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"

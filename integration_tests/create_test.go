@@ -1,12 +1,13 @@
 package integrationtests
 
 import (
-	"banney/sdk"
-	"banney/sdk/models"
 	"encoding/json"
 	"net/http"
 	"strings"
 	"testing"
+
+	"banney/sdk"
+	"banney/sdk/models"
 
 	"gotest.tools/v3/assert"
 )

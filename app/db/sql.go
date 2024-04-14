@@ -67,4 +67,28 @@ WHERE feature_id=$1
 AND tag_id =$2`
 
 	queryGetTagsByBannerID = `SELECT tag_id from banner_tag WHERE banner_id=$1`
+
+	queryGetBannersByTag = `SELECT
+    banner.banner_id,
+    banner.feature_id,
+    banner.content,
+    banner.is_active
+FROM
+    banner_tag
+INNER JOIN
+    banner
+  ON banner_tag.banner_id = banner.banner_id
+WHERE tag_id =$1 LIMIT $2 OFFSET $3`
+
+	queryGetBannersByFeature = `SELECT
+banner.banner_id,
+banner.feature_id,
+banner.content,
+banner.is_active
+FROM
+banner_tag
+INNER JOIN
+banner
+ON banner_tag.banner_id = banner.banner_id
+WHERE feature_id =$1 LIMIT $2 OFFSET $3`
 )

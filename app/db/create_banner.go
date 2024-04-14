@@ -1,11 +1,12 @@
 package db
 
 import (
-	"banney/sdk/models"
 	"context"
 	"database/sql"
 	"errors"
 	"fmt"
+
+	"banney/sdk/models"
 )
 
 func (r *Client) CreateBanner(ctx context.Context, obj any) (int, error) {
@@ -41,6 +42,7 @@ func (r *Client) CreateBanner(ctx context.Context, obj any) (int, error) {
 			return -1, fmt.Errorf("get banner: %w", err)
 		}
 	}
+
 	if foundBanner.ID != 0 {
 		return -1, ErrBannerExists
 	}

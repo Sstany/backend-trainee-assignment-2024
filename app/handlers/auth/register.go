@@ -1,10 +1,11 @@
 package auth
 
 import (
-	"banney/sdk"
-	"banney/sdk/models"
 	"encoding/json"
 	"net/http"
+
+	"banney/sdk"
+	"banney/sdk/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
@@ -22,6 +23,7 @@ func (r *AuthRouter) register(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, &models.ServerError{Error: err.Error()})
 		return
 	}
+
 	claims := models.Claims{
 		UserID:  userID,
 		IsAdmin: user.IsAdmin,

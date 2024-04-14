@@ -1,12 +1,13 @@
 package auth
 
 import (
-	"banney/sdk"
-	"banney/sdk/models"
 	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
+
+	"banney/sdk"
+	"banney/sdk/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"

@@ -15,6 +15,13 @@ type Banner struct {
 	IsActive  bool  `json:"is_active"`
 }
 
+type BannerFilter struct {
+	FeatureID int
+	TagID     int
+	Offset    int
+	Limit     int
+}
+
 type BannerCreated struct {
 	ID int `json:"banner_id"`
 }
