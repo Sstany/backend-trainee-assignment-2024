@@ -12,10 +12,13 @@ services:
   web:
     depends_on:
         - "postgres"
+    restart: always
     build: .
     ports:
         - "8090:8090"
     environment:
         - POSTGRES=postgresql://username:password@postgres:5432/avito?sslmode=disable
+        - SECRET=secure-secret
+        - HOST=:8090
 volumes:
   postgres:
